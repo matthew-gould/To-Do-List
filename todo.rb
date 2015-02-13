@@ -23,7 +23,7 @@ def due (item, due_date)
 
 def done (item)
 # Marks the given item as completed.
-   Item.find_by(id: item).update(completed: true)
+   Item.find_by(item_name: item).update(completed: true)
 end
 
 def list name=nil
@@ -31,10 +31,10 @@ def list name=nil
   if name != nil
     a = List.find_by(name: name).items
     a.find_each do |item|
-      if item.completed = true
-        puts "#{item.item_name}".colorize(:green)
-      else
+      if item.completed == false
         puts "#{item.item_name}".colorize(:red)
+      else
+        puts "#{item.item_name}".colorize(:green)
     end
   end
   else
