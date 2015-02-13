@@ -4,6 +4,8 @@ require "./lib/all"
 require "colorize"
 
 puts "*****RUNNING TO-DO LIST*****"
+puts "An item in red means it is incomplete.".colorize(:red)
+puts "An item in green means that task has been completed!".colorize(:green)
 sleep(1)
 puts "\n===========================\n==========================="
 
@@ -38,8 +40,10 @@ def list name=nil
     end
   end
   else
-    a = Item.find_by(completed: false)
-    
+    a = Item.where(completed: false)
+      a.find_each do |item|
+        puts "#{item.item_name}".colorize(:red)
+      end
   end
 end
 
