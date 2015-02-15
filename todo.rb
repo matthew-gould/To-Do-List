@@ -79,7 +79,7 @@ def search (string)
   b = List.all
   a.each do |item|
     if "#{string}".match(item.item_name)
-      puts "#{item.item_name}, #{item.due_date}, #{item.completed}"
+      puts "#{item.item_name},\ndue on: #{item.due_date},\ncompleted? #{item.completed}"
     end
   end
   b.each do |list|
