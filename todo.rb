@@ -19,7 +19,7 @@ def add (list, item)
 
 def due (item, due_date)
 # This will add a due date for an already created item.
-  a = Item.find_by(id: item)
+  a = Item.find_by(item_name: item)
   a.update(due_date: due_date)
   end
 
@@ -49,19 +49,44 @@ end
 
 def list_all
 # Show all lists/items with visual cue for completed items.
-  
-    # if Item.find_by(completed: true)
-    #   .colorize(:green)
-    # else .colorize(:red)
-    # end
+  a = Item.all
+    a.find_each do |item|
+      if item.completed == false
+        puts "#{item.item_name}".colorize(:red)
+      else
+        puts "#{item.item_name}".colorize(:green)
+    end
+  end
 end
 
-def next
+def rando
 # Picks a random item with preference for items with due dates.
+  a = Item.where("due_date is not null")
+    if a.count > 0
+      x = a.sample
+      puts "#{x.item_name}"
+    else
+      b = Item.all
+      x = b.sample
+      puts "#{x.item_name}"
+    end
+
 end
 
 def search (string)
 # Searched lists/items for a specific string.
+  a = Item.all
+  b = List.all
+  a.each do |item|
+    if "#{string}".match(item.item_name)
+      puts "#{item.item_name}, #{item.due_date}, #{item.completed}"
+    end
+  end
+  b.each do |list|
+    if "#{string}".match(list.name)
+      puts "#{list.name}"
+    end
+  end
 end
 
 
@@ -93,5 +118,19 @@ when "list"
   name = ARGV.first
 
   list(name)
+end
+case command
+when "list_all"
+  list_all
+end
+case command
+when "rando"
+  rando
+end
+case command
+when "search"
+  string = ARGV.first
+
+  search(string)
 end
 
